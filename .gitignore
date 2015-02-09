@@ -1,0 +1,7 @@
+*.dll
+*.exe*
+*.pdb
+*.nupkg
+*.suo
+*.cache
+*.force
