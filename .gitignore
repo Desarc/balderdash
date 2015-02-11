@@ -5,6 +5,9 @@
 *.suo
 *.cache
 *.force
-*/obj/*
-*/bin/*
-*/packages/*
+obj/*
+bin/*
+packages/*
+
+*.user
+*.userprefs

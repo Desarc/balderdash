@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>Balderdash gameboard</title>
+
+        <link rel="stylesheet" href="css/balderdash-gameboard.css" />
+    
+    </head>
+    <body>
+        <script type="text/javascript" src="scripts/jquery-2.1.3.min.js"></script>
+        <!--script type="text/javascript" src="scripts/angular.min.js"></!--script-->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script type="text/javascript" src="scripts/jquery.signalR-2.2.0.min.js"></script>
+        <script type="text/javascript" src="gameboard-connection.js"></script>
+
+
+        <div data-ng-app="app" data-ng-controller="signalrController">
+            <span>{{text}}</span>
+        </div>
+        
+    </body>
+</html>
