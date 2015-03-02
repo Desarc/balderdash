@@ -18,12 +18,7 @@ namespace Desarc.Balderdash.Server
                 map =>
                 {
                     map.UseCors(CorsOptions.AllowAll);
-
-                    var hubConfiguration = new HubConfiguration
-                    {
-                    };
-
-                    map.RunSignalR(hubConfiguration);
+                    map.RunSignalR(new HubConfiguration());
                 });
         }
     }

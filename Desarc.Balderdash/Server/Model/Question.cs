@@ -7,21 +7,27 @@ namespace Desarc.Balderdash.Server
 {
     public class Question
     {
-        private readonly Guid m_id;
-        private readonly string m_questionText;
         private readonly List<string> m_fakeAnswers;
         private List<string> m_alreadySelectedFakeAnswers = new List<string>();
 
         private readonly Random random = new Random();
 
-        public Question(string questionText, List<string> fakeAnswers)
+        public Question(string questionText, string correctAnswer, string fakeAnswers)
         {
-            m_questionText = questionText;
-            m_fakeAnswers = fakeAnswers;
-            m_id = new Guid();
+            Id = new Guid();
+            QuestionText = questionText;
+            CorrectAnswer = correctAnswer;
+            if (fakeAnswers != null && fakeAnswers.Length > 0)
+            {
+                m_fakeAnswers = fakeAnswers.Split(',').ToList();
+            }
         }
 
+        public Guid Id { get; private set; }
+
         public string QuestionText { get; private set; }
+
+        public string CorrectAnswer { get; private set; }
 
         public string GetRandomFakeAnswer()
         {
@@ -48,6 +54,5 @@ namespace Desarc.Balderdash.Server
             m_fakeAnswers.AddRange(m_alreadySelectedFakeAnswers);
             m_alreadySelectedFakeAnswers = new List<string>();
         }
-
     }
 }
