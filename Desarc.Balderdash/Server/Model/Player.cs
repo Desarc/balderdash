@@ -9,9 +9,15 @@ namespace Desarc.Balderdash.Server
     {
         private int m_score = 0;
 
-        public string PlayerName { get; set; }
+        public Player(string connectionId, string playerName)
+        {
+            PlayerName = playerName;
+            ConnectionId = connectionId;
+        }
 
-        public string ConnectionId { get; set; }
+        public string PlayerName { get; private set; }
+
+        public string ConnectionId { get; private set; }
 
         public void AddToScore(int score)
         {

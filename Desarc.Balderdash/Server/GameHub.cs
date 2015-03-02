@@ -9,37 +9,45 @@ namespace Desarc.Balderdash.Server
 {
     public class GameHub : Hub
     {
-        const string PlayersGroupName = "players";
+        private const string PlayersGroupName = "players";
 
         private static List<Player> m_players = new List<Player>();
 
         private static string m_gameBoardConnectionId;
+        private static bool m_gameRunning = false;
 
         public GameHub()
         {
             
         }
 
-        public void Hello()
-        {
-            Clients.All.hello();
-        }
+        public static Game Game { get; private set; }
 
         public void PlayerLogon(string playerName)
         {
             var connectionId = Context.ConnectionId;
+            Console.WriteLine("Logon from {0}, playerName: {1}", Context.ConnectionId, playerName);
 
             if (!m_players.Exists(p => p.ConnectionId == connectionId)) 
             {
-                m_players.Add(new Player { ConnectionId = connectionId, PlayerName = playerName });
+                m_players.Add(new Player(connectionId, playerName));
                 Groups.Add(connectionId, PlayersGroupName);
-                Clients.Client(m_gameBoardConnectionId).NewPlayer(playerName);
+                //Clients.Client(m_gameBoardConnectionId).NewPlayer(playerName);
             }
         }
 
         public void StartGame()
         {
-            
+            //if (m_gameRunning)
+            //{
+            //    return;
+            //}
+
+            Console.WriteLine("{0} has started a new game!", Context.ConnectionId);
+
+            m_gameRunning = true;
+            Game = new Game();
+            PublishQuestion(Game.GetRandomQuestion().QuestionText);
         }
 
         public void SubmitAnswer()

@@ -11,11 +11,29 @@ namespace Desarc.Balderdash.Server
 {
     public class Game
     {
-        private readonly List<Question> m_questions;
+        private readonly List<Question> m_unusedQuestions;
+        private readonly List<Question> m_usedQuestions;
+
+        private readonly Random random = new Random();
 
         public Game()
         {
-            m_questions = LoadQuestions();
+            m_unusedQuestions = LoadQuestions();
+            m_usedQuestions = new List<Question>();
+        }
+
+        public Question GetRandomQuestion()
+        {
+            if (m_unusedQuestions.Count == 0)
+            {
+                return null;
+            }
+
+            var index = random.Next(m_unusedQuestions.Count);
+            var question = m_unusedQuestions.ElementAt(index);
+            m_unusedQuestions.RemoveAt(index);
+            m_usedQuestions.Add(question);
+            return question;
         }
 
         private List<Question> LoadQuestions()

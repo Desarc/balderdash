@@ -7,7 +7,7 @@ app.service('signalRService', function ($, $rootScope) {
     var initialize = function () {
         connection = $.hubConnection("http://localhost:1337/");
 
-        this.proxy = connection.createHubProxy('balderdashHub');
+        this.proxy = connection.createHubProxy('gameHub');
 
         connection.start();
 
@@ -72,6 +72,8 @@ app.service('signalRService', function ($, $rootScope) {
 app.controller("signalrController", function ($scope, signalRService, $rootScope) {
     $scope.text = "";
 
+    playername = "Desarc";
+
     $scope.logon = function (playerName) {
         signalRService.playerLogon(playername);
     }
@@ -80,7 +82,7 @@ app.controller("signalrController", function ($scope, signalRService, $rootScope
         signalRService.startGame();
     }
 
-    updateGreetingMessage = function (text) {
+    updateText = function (text) {
         $scope.text = text;
     }
 
@@ -88,9 +90,9 @@ app.controller("signalrController", function ($scope, signalRService, $rootScope
 
     //Updating greeting message after receiving a message through the event
 
-    $scope.$parent.$on("acceptGreet", function (e, message) {
+    $scope.$parent.$on("newQuestion", function (e, message) {
         $scope.$apply(function () {
-            updateGreetingMessage(message)
+            updateText(message)
         });
     });
 });

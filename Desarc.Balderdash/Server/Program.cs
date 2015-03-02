@@ -12,8 +12,6 @@ namespace Desarc.Balderdash.Server
 
         private static void Main(string[] args)
         {
-            Game = new Game();
-            
             const string UrlWebServer = "http://*:1337/";
 
             using (WebApp.Start<Startup>(UrlWebServer))
@@ -25,7 +23,5 @@ namespace Desarc.Balderdash.Server
 
             Console.WriteLine("Server stopped.");
         }
-
-        public static Game Game { get; private set; }
     }
 }

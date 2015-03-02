@@ -7,16 +7,18 @@ namespace Desarc.Balderdash.Server
 {
     public class Question
     {
+        private readonly string m_questionText;
+        private readonly string m_correctAnswer;
         private readonly List<string> m_fakeAnswers;
-        private List<string> m_alreadySelectedFakeAnswers = new List<string>();
+        private readonly List<string> m_alreadySelectedFakeAnswers = new List<string>();
 
         private readonly Random random = new Random();
 
         public Question(string questionText, string correctAnswer, string fakeAnswers)
         {
             Id = new Guid();
-            QuestionText = questionText;
-            CorrectAnswer = correctAnswer;
+            m_questionText = questionText.Replace("*", "_______");
+            m_correctAnswer = correctAnswer;
             if (fakeAnswers != null && fakeAnswers.Length > 0)
             {
                 m_fakeAnswers = fakeAnswers.Split(',').ToList();
@@ -25,17 +27,23 @@ namespace Desarc.Balderdash.Server
 
         public Guid Id { get; private set; }
 
-        public string QuestionText { get; private set; }
+        public string QuestionText 
+        {
+            get { return m_questionText.ToUpper(); }
+        }
 
-        public string CorrectAnswer { get; private set; }
+        public string CorrectAnswer
+        {
+            get { return m_correctAnswer.ToUpper(); }
+        }
 
         public string GetRandomFakeAnswer()
         {
-            var index = random.Next(0, m_fakeAnswers.Count);
+            var index = random.Next(m_fakeAnswers.Count);
             var fakeAnswer = m_fakeAnswers.ElementAt(index);
             m_fakeAnswers.RemoveAt(index);
             m_alreadySelectedFakeAnswers.Add(fakeAnswer);
-            return fakeAnswer;
+            return fakeAnswer.ToUpper();
         }
 
         public List<string> GetManyRandomFakeAnswers(int number)
@@ -52,7 +60,7 @@ namespace Desarc.Balderdash.Server
         public void Reset()
         {
             m_fakeAnswers.AddRange(m_alreadySelectedFakeAnswers);
-            m_alreadySelectedFakeAnswers = new List<string>();
+            m_alreadySelectedFakeAnswers.Clear();
         }
     }
 }
